@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Care Tips | Pet World{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>Pet Care Hub</h1>
+  <p>Learn how to handle a new pet — food, daily routine, and beginner steps.</p>
+</div>
+
+<div class="actions" style="margin-bottom: 1.2rem;">
+  <a class="btn btn-primary" href="{% url 'beginner_guide' %}">New Pet Owner Guide</a>
+  <a class="btn btn-secondary" href="{% url 'food_guide' %}">Food Guide</a>
+  <a class="btn btn-secondary" href="{% url 'breeds_home' %}">Browse Breeds</a>
+</div>
+
+<section class="section">
+  <h2>Food at a glance</h2>
+  <div class="grid">
+    {% for guide in food_guides %}
+    <article class="card">
+      <span class="badge">{{ guide.get_pet_type_display }}</span>
+      <h3>{{ guide.title }}</h3>
+      <p><strong>Meals:</strong> {{ guide.daily_meals }}</p>
+      <a class="btn btn-secondary" href="{% url 'food_guide' %}?type={{ guide.pet_type }}">Read food guide</a>
+    </article>
+    {% empty %}
+    <div class="card empty">Food guides not loaded yet.</div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section">
+  <h2>Care tips</h2>
+  <div class="grid">
+    {% for tip in tips %}
+    <article class="card">
+      <span class="badge">{{ tip.get_level_display }}</span>
+      <h3><a href="{% url 'tip_detail' tip.pk %}">{{ tip.title }}</a></h3>
+      <p>{{ tip.summary|truncatewords:20 }}</p>
+      <a class="btn btn-secondary" href="{% url 'tip_detail' tip.pk %}">View steps</a>
+    </article>
+    {% empty %}
+    <div class="card empty">Tips not loaded yet.</div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

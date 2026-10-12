@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Share Pet Photo | Pet World{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>Share Your Pet Photo</h1>
+  <p>Upload a picture and introduce your pet to the community.</p>
+</div>
+
+{% if error %}
+<div class="alert">{{ error }}</div>
+{% endif %}
+
+<form class="form card" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <label>Your Name
+    <input type="text" name="owner_name" placeholder="e.g. Amna">
+  </label>
+  <label>Pet Name
+    <input type="text" name="name" required placeholder="e.g. Buddy">
+  </label>
+  <label>Category
+    <select name="category">
+      <option value="dog">Dog</option>
+      <option value="cat">Cat</option>
+      <option value="bird">Bird</option>
+      <option value="other">Other</option>
+    </select>
+  </label>
+  <label>Age (years)
+    <input type="number" name="age" min="1" value="1" required>
+  </label>
+  <label>Pet Photo
+    <input type="file" name="photo" accept="image/*" required>
+  </label>
+  <label>Description
+    <textarea name="description" rows="4" placeholder="Tell something cute about your pet..."></textarea>
+  </label>
+  <button class="btn btn-primary" type="submit">Upload & Share</button>
+</form>
+{% endblock %}

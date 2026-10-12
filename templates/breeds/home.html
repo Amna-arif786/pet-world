@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Breeds Guide | Pet World{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>Pet Breeds Guide</h1>
+  <p>New pet owner? Open any breed to learn food, daily care, and common mistakes.</p>
+</div>
+
+<div class="filters">
+  <a href="{% url 'breeds_home' %}" class="{% if not selected_type %}active{% endif %}">All</a>
+  <a href="?type=dog" class="{% if selected_type == 'dog' %}active{% endif %}">Dogs</a>
+  <a href="?type=cat" class="{% if selected_type == 'cat' %}active{% endif %}">Cats</a>
+  <a href="?type=bird" class="{% if selected_type == 'bird' %}active{% endif %}">Birds</a>
+  <a href="?type=other" class="{% if selected_type == 'other' %}active{% endif %}">Other</a>
+</div>
+
+<p class="muted-line">{{ beginner_count }} breeds marked as beginner-friendly</p>
+
+{% if breeds %}
+<div class="grid">
+  {% for breed in breeds %}
+  <article class="card guide-card">
+    <span class="badge">{{ breed.get_pet_type_display }}</span>
+    {% if breed.good_for_beginners %}<span class="badge badge-soft">Beginner OK</span>{% endif %}
+    <h3><a href="{% url 'breed_detail' breed.pk %}">{{ breed.name }}</a></h3>
+    <p><strong>Nature:</strong> {{ breed.temperament }}</p>
+    <p><strong>Size:</strong> {{ breed.size }}</p>
+    <p>{{ breed.overview|truncatewords:22 }}</p>
+    <a class="btn btn-secondary" href="{% url 'breed_detail' breed.pk %}">How to care & feed</a>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card empty">No breeds found. Run seed_guides.py first.</div>
+{% endif %}
+{% endblock %}

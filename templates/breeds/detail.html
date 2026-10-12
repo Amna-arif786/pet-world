@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}{{ breed.name }} Care Guide | Pet World{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>{{ breed.name }}</h1>
+  <p>{{ breed.get_pet_type_display }} · {{ breed.size }} · Lifespan: {{ breed.lifespan|default:"—" }}</p>
+</div>
+
+<div class="badge-row">
+  <span class="badge">{{ breed.temperament }}</span>
+  {% if breed.good_for_beginners %}<span class="badge badge-soft">Good for beginners</span>{% endif %}
+</div>
+
+<section class="guide-sections">
+  <article class="card">
+    <h2>About this pet</h2>
+    <p>{{ breed.overview }}</p>
+    {% if breed.fun_fact %}<p class="fun-fact"><strong>Fun fact:</strong> {{ breed.fun_fact }}</p>{% endif %}
+  </article>
+
+  <article class="card highlight-card">
+    <h2>What to feed</h2>
+    <p>{{ breed.food_guide }}</p>
+  </article>
+
+  <article class="card danger-card">
+    <h2>Never give these foods</h2>
+    <p>{{ breed.avoid_food }}</p>
+  </article>
+
+  <article class="card">
+    <h2>Daily care (how to deal)</h2>
+    <p>{{ breed.daily_care }}</p>
+  </article>
+
+  {% if breed.common_mistakes %}
+  <article class="card">
+    <h2>Common beginner mistakes</h2>
+    <p>{{ breed.common_mistakes }}</p>
+  </article>
+  {% endif %}
+</section>
+
+<div class="actions" style="margin: 1rem 0 2rem;">
+  <a class="btn btn-primary" href="{% url 'food_guide' %}?type={{ breed.pet_type }}">Full {{ breed.get_pet_type_display }} Food Guide</a>
+  <a class="btn btn-secondary" href="{% url 'beginner_guide' %}">Beginner Starter Guide</a>
+</div>
+
+{% if related %}
+<section class="section">
+  <h2>Related breeds</h2>
+  <div class="grid">
+    {% for item in related %}
+    <article class="card">
+      <h3><a href="{% url 'breed_detail' item.pk %}">{{ item.name }}</a></h3>
+      <p>{{ item.temperament }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

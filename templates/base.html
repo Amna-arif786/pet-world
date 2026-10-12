@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Pet World{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=3">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="{% url 'home' %}">Pet World</a>
+      <nav class="nav-links">
+        {% with n=request.resolver_match.url_name %}
+        <a href="{% url 'home' %}" class="{% if n == 'home' %}active{% endif %}">Home</a>
+        <a href="{% url 'beginner_guide' %}" class="{% if n == 'beginner_guide' %}active{% endif %}">Beginner</a>
+        <a href="{% url 'breeds_home' %}" class="{% if n == 'breeds_home' or n == 'breed_detail' or n == 'breeds_about' or n == 'breeds_contact' %}active{% endif %}">Breeds</a>
+        <a href="{% url 'food_guide' %}" class="{% if n == 'food_guide' %}active{% endif %}">Food</a>
+        <a href="{% url 'care_home' %}" class="{% if n == 'care_home' or n == 'tip_detail' or n == 'care_about' or n == 'care_contact' %}active{% endif %}">Care</a>
+        <a href="{% url 'gallery' %}" class="{% if n == 'gallery' or n == 'pet_detail' or n == 'pet_list' %}active{% endif %}">Gallery</a>
+        <a href="{% url 'add_pet' %}" class="{% if n == 'add_pet' %}active{% endif %}">Share Photo</a>
+        <a href="{% url 'pets_contact' %}" class="{% if n == 'pets_contact' %}active{% endif %}">Contact</a>
+        {% endwith %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container">Pet World &copy; 2026</div>
+  </footer>
+  <script src="{% static 'js/likes.js' %}?v=2"></script>
+</body>
+</html>

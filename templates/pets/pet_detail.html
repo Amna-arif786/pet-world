@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}{{ pet.name }} | Pet World{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>{{ pet.name }}</h1>
+  <p>Shared by {{ pet.owner_name }}</p>
+</div>
+
+<section class="detail-layout">
+  <div class="detail-photo card">
+    {% if pet.photo %}
+      <img src="{{ pet.photo.url }}" alt="{{ pet.name }}">
+    {% else %}
+      <div class="pet-photo placeholder big">No photo uploaded</div>
+    {% endif %}
+  </div>
+  <div class="card detail-info">
+    <span class="badge">{{ pet.get_category_display }}</span>
+    <p><strong>Age:</strong> {{ pet.age }} year{{ pet.age|pluralize }}</p>
+    <p><strong>Owner:</strong> {{ pet.owner_name }}</p>
+    <p><strong>Likes:</strong> <span data-like-count>{{ pet.likes }}</span></p>
+    <p>{{ pet.description|default:"No description yet." }}</p>
+    <form class="like-form" method="post" action="{% url 'like_pet' pet.pk %}" style="margin-top: 1rem;">
+      {% csrf_token %}
+      <button class="btn btn-like{% if is_liked %} is-liked{% endif %}" type="submit" aria-pressed="{% if is_liked %}true{% else %}false{% endif %}">
+        ❤ <span data-like-label>{% if is_liked %}Liked{% else %}Like this pet{% endif %}</span>
+        (<span data-like-count>{{ pet.likes }}</span>)
+      </button>
+    </form>
+    <div class="actions" style="margin-top: 1rem;">
+      <a class="btn btn-secondary" href="{% url 'gallery' %}">Back to Gallery</a>
+      <a class="btn btn-primary" href="{% url 'add_pet' %}">Share Your Pet</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

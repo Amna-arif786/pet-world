@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Photo Gallery | Pet World{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>Pet Photo Gallery</h1>
+  <p>Cute pets shared by the community. Upload yours too!</p>
+</div>
+
+<div class="actions" style="margin-bottom: 1rem;">
+  <a class="btn btn-primary" href="{% url 'add_pet' %}">Share Your Pet Photo</a>
+</div>
+
+{% if pets %}
+<div class="gallery-grid">
+  {% for pet in pets %}
+  <a href="{% url 'pet_detail' pet.pk %}" class="gallery-item">
+    <img src="{{ pet.photo.url }}" alt="{{ pet.name }}">
+    <div class="gallery-overlay">
+      <strong>{{ pet.name }}</strong>
+      <span>❤ {{ pet.likes }} · by {{ pet.owner_name }}</span>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card empty">
+  No photos yet. <a href="{% url 'add_pet' %}"><strong>Be the first to share</strong></a>
+</div>
+{% endif %}
+{% endblock %}

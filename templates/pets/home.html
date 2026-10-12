@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Home | Pet World{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Welcome to Pet World</h1>
+    <p>
+      New pet owner? Learn breeds, safe foods, and daily care — then share your pet photos with the community.
+    </p>
+    <div class="actions">
+      <a class="btn btn-primary" href="{% url 'beginner_guide' %}">Beginner Guide</a>
+      <a class="btn btn-secondary" href="{% url 'food_guide' %}">Food Guide</a>
+      <a class="btn btn-secondary" href="{% url 'breeds_home' %}">Breeds</a>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat-card">
+      <strong>{{ total_pets }}</strong>
+      Pets shared
+    </div>
+    <div class="stat-card">
+      <strong>{{ photo_count }}</strong>
+      Photos in gallery
+    </div>
+  </div>
+</section>
+
+{% if top_liked %}
+<section class="section">
+  <h2>Most Liked Pets</h2>
+  <div class="grid">
+    {% for pet in top_liked %}
+      {% include 'pets/_pet_card.html' %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="section">
+  <h2>Latest Pets</h2>
+  {% if pets %}
+  <div class="grid">
+    {% for pet in pets %}
+      {% include 'pets/_pet_card.html' %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="card empty">
+    No pets yet. <a href="{% url 'add_pet' %}"><strong>Share the first pet photo</strong></a>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

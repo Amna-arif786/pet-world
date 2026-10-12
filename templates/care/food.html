@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Pet Food Guide | Pet World{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>Pet Food Guide</h1>
+  <p>For new pet owners: what to feed, how often, and what to avoid completely.</p>
+</div>
+
+<div class="filters">
+  <a href="{% url 'food_guide' %}" class="{% if not selected_type %}active{% endif %}">All</a>
+  <a href="?type=dog" class="{% if selected_type == 'dog' %}active{% endif %}">Dogs</a>
+  <a href="?type=cat" class="{% if selected_type == 'cat' %}active{% endif %}">Cats</a>
+  <a href="?type=bird" class="{% if selected_type == 'bird' %}active{% endif %}">Birds</a>
+  <a href="?type=other" class="{% if selected_type == 'other' %}active{% endif %}">Rabbits & Other</a>
+</div>
+
+{% if selected %}
+<section class="guide-sections">
+  <article class="card highlight-card">
+    <h2>{{ selected.title }}</h2>
+    <p><strong>Daily meals:</strong> {{ selected.daily_meals }}</p>
+  </article>
+  <article class="card">
+    <h2>Good foods</h2>
+    <p>{{ selected.good_foods }}</p>
+  </article>
+  <article class="card danger-card">
+    <h2>Dangerous / avoid</h2>
+    <p>{{ selected.bad_foods }}</p>
+  </article>
+  <article class="card">
+    <h2>Feeding tips</h2>
+    <p>{{ selected.feeding_tips }}</p>
+  </article>
+  {% if selected.water_tips %}
+  <article class="card">
+    <h2>Water tips</h2>
+    <p>{{ selected.water_tips }}</p>
+  </article>
+  {% endif %}
+</section>
+{% else %}
+<div class="grid">
+  {% for guide in guides %}
+  <article class="card guide-card">
+    <span class="badge">{{ guide.get_pet_type_display }}</span>
+    <h3>{{ guide.title }}</h3>
+    <p><strong>Meals:</strong> {{ guide.daily_meals }}</p>
+    <p>{{ guide.good_foods|truncatewords:20 }}</p>
+    <a class="btn btn-primary" href="?type={{ guide.pet_type }}">Full guide</a>
+  </article>
+  {% empty %}
+  <div class="card empty">No food guides yet.</div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}All Pets | Pet World{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>All Pets</h1>
+  <p>Browse pets and open their photo profiles.</p>
+</div>
+
+<div class="filters">
+  <a href="{% url 'pet_list' %}" class="{% if not selected_category %}active{% endif %}">All</a>
+  <a href="?category=dog" class="{% if selected_category == 'dog' %}active{% endif %}">Dogs</a>
+  <a href="?category=cat" class="{% if selected_category == 'cat' %}active{% endif %}">Cats</a>
+  <a href="?category=bird" class="{% if selected_category == 'bird' %}active{% endif %}">Birds</a>
+  <a href="?category=other" class="{% if selected_category == 'other' %}active{% endif %}">Other</a>
+</div>
+
+{% if pets %}
+<div class="grid">
+  {% for pet in pets %}
+    {% include 'pets/_pet_card.html' %}
+  {% endfor %}
+</div>
+{% else %}
+<div class="card empty">No pets found in this category.</div>
+{% endif %}
+{% endblock %}

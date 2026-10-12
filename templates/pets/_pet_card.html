@@ -1,0 +1,26 @@
+<article class="card pet-card">
+  <a href="{% url 'pet_detail' pet.pk %}" class="pet-photo-wrap">
+    {% if pet.photo %}
+      <img src="{{ pet.photo.url }}" alt="{{ pet.name }}" class="pet-photo">
+    {% else %}
+      <div class="pet-photo placeholder">No photo</div>
+    {% endif %}
+  </a>
+  <div class="pet-card-body">
+    <span class="badge">{{ pet.get_category_display }}</span>
+    <h3><a href="{% url 'pet_detail' pet.pk %}">{{ pet.name }}</a></h3>
+    <p class="owner">Shared by {{ pet.owner_name }}</p>
+    <p>Age: {{ pet.age }} year{{ pet.age|pluralize }}</p>
+    <p>{{ pet.description|default:"No description yet."|truncatewords:14 }}</p>
+    <div class="pet-actions">
+      <form class="like-form" method="post" action="{% url 'like_pet' pet.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <button class="btn btn-like{% if pet.pk in liked_pet_ids %} is-liked{% endif %}" type="submit" aria-pressed="{% if pet.pk in liked_pet_ids %}true{% else %}false{% endif %}">
+          ❤ <span data-like-count>{{ pet.likes }}</span>
+        </button>
+      </form>
+      <a class="btn btn-secondary" href="{% url 'pet_detail' pet.pk %}">View</a>
+    </div>
+  </div>
+</article>

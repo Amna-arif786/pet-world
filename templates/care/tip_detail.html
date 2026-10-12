@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}{{ tip.title }} | Pet World{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>{{ tip.title }}</h1>
+  <p>{{ tip.get_level_display }}{% if tip.pet_type %} · {{ tip.get_pet_type_display }}{% endif %}</p>
+</div>
+
+<article class="card" style="margin-bottom: 1rem;">
+  <p>{{ tip.summary }}</p>
+</article>
+
+<article class="card highlight-card">
+  <h2>Follow these steps</h2>
+  <ol class="step-list">
+    {% for step in tip.step_list %}
+    <li>{{ step }}</li>
+    {% endfor %}
+  </ol>
+</article>
+
+<div class="actions" style="margin: 1.2rem 0 2rem;">
+  <a class="btn btn-secondary" href="{% url 'care_home' %}">Back to Care Hub</a>
+  <a class="btn btn-primary" href="{% url 'food_guide' %}">Open Food Guide</a>
+</div>
+{% endblock %}

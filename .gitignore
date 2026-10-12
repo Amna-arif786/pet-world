@@ -1,0 +1,62 @@
+# ============ Python ============
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ============ Virtual Environment ============
+venv/
+env/
+.env/
+.venv/
+ENV/
+ENV\b
+
+# ============ Secrets / Environment Variables ============
+.env
+.env.*
+!.env.example
+
+# ============ Django ============
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+staticfiles/
+staticfiles.json
+
+# Media (user uploads) — repo me chhota seed data rakhna hai to is line ko
+# uncomment kar dein, warna upload files ignore hoti rahengi:
+# media/
+
+# ============ IDE / Editor ============
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# ============ OS Junk ============
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+._*

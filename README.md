@@ -53,8 +53,8 @@ Built as a portfolio project with Python, Django, and vanilla HTML/CSS/JS.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/pet_world.git
-cd pet_world
+git clone https://github.com/Amna-arif786/pet-world.git
+cd pet-world
 
 # 2. Create and activate a virtual environment
 python -m venv venv
